@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter/rendering.dart';
 
-import 'pages/home.dart';
+import 'pages/auth.dart';
+import 'pages/product_admin.dart';
+import 'pages/products.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -20,7 +22,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         accentColor: Colors.indigoAccent,
       ),
-      home: HomePage(),
+      //define the home property or the / route, can't use both
+//      home: AuthPage(),
+      routes: {
+        //the / is a special route that is reserved for the home page
+        '/': (context) => ProductsPage(),
+        '/admin': (context) => ProductAdminPage(),
+      },
     );
   }
 }
