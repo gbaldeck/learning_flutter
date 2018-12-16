@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'pages/product.dart';
 
-class BuildProductItem extends StatelessWidget{
+class BuildProductItem extends StatelessWidget {
   final int index;
   final List<Map<String, String>> products;
   final void Function(int) deleteProduct;
 
-  const BuildProductItem({@required this.products, @required this.index, @required this.deleteProduct});
+  const BuildProductItem(
+      {@required this.products,
+      @required this.index,
+      @required this.deleteProduct});
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +25,15 @@ class BuildProductItem extends StatelessWidget{
               FlatButton(
                 color: Theme.of(context).accentColor,
                 child: Text('Details'),
-                onPressed: () => Navigator.push<bool>(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => ProductPage(
-                      title: products[index]['title'],
-                      imageUrl: products[index]['image'],
-                    ),
-                  ),
-                ).then(
+                onPressed: () => Navigator.pushNamed<bool>(
+                            context, '/product/' + index.toString())
+                        .then(
                       (bool value) {
-                    if(value){
-                      deleteProduct(index);
-                    }
-                  },
-                ),
+                        if (value) {
+                          deleteProduct(index);
+                        }
+                      },
+                    ),
               )
             ],
           ),
@@ -44,5 +41,4 @@ class BuildProductItem extends StatelessWidget{
       ),
     );
   }
-
 }
