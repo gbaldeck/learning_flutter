@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'pages/product.dart';
-
 class BuildProductItem extends StatelessWidget {
   final int index;
-  final List<Map<String, String>> products;
-  final void Function(int) deleteProduct;
+  final List<Map<String, dynamic>> products;
 
   const BuildProductItem(
       {@required this.products,
-      @required this.index,
-      @required this.deleteProduct});
+      @required this.index});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(
         children: [
-          Image.asset(products[index]['image']),
-          Text(products[index]['title']),
+          Image.asset(products[index]['image'] as String),
+          Text(products[index]['title'] as String),
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: [
@@ -30,7 +26,7 @@ class BuildProductItem extends StatelessWidget {
                         .then(
                       (bool value) {
                         if (value) {
-                          deleteProduct(index);
+//                          deleteProduct(index);
                         }
                       },
                     ),
