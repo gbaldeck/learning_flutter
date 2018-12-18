@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter/rendering.dart';
 
+import 'pages/auth.dart';
 import 'pages/product.dart';
 import 'pages/product_admin.dart';
 import 'pages/products.dart';
@@ -47,7 +48,8 @@ class _MyAppState extends State<MyApp> {
 //      home: AuthPage(),
       routes: {
         //the / is a special route that is reserved for the home page
-        '/': (context) => ProductsPage(_products),
+        '/': (context) => AuthPage(),
+        '/products': (context) => ProductsPage(_products),
         '/admin': (context) => ProductAdminPage(_addProduct, _deleteProduct),
       },
       onGenerateRoute: (RouteSettings settings) {
