@@ -18,52 +18,78 @@ class _AuthPageState extends State<AuthPage> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 50),
-          child: Column(
-            children: <Widget>[
-              TextField(
-                decoration: InputDecoration(labelText: 'Email'),
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (emailOrNull) => setState(
-                      () => _email = emailOrNull ?? "test",
-                    ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(labelText: 'Password'),
-                onChanged: (passwordOrNull) => setState(
-                      () => _password = passwordOrNull ?? "test",
-                    ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              SwitchListTile(
-                title: Text('Accept Terms'),
-                value: _acceptTerms,
-                onChanged: (value) {
-                  setState(() {
-                    _acceptTerms = value;
-                  });
-                },
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/products');
-                  print('Email: $_email');
-                  print('Password: $_password');
-                },
-                child: Text('LOGIN'),
-              ),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4),
+              BlendMode.dstATop,
+            ),
+            image: AssetImage('assets/background.jpg'),
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 50),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (emailOrNull) => setState(
+                        () => _email = emailOrNull ?? "test",
+                      ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  onChanged: (passwordOrNull) => setState(
+                        () => _password = passwordOrNull ?? "test",
+                      ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: SwitchListTile(
+                    title: Text('Accept Terms'),
+                    value: _acceptTerms,
+                    onChanged: (value) {
+                      setState(() {
+                        _acceptTerms = value;
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/products');
+                    print('Email: $_email');
+                    print('Password: $_password');
+                  },
+                  child: Text('LOGIN'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

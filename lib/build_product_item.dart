@@ -67,9 +67,9 @@ class BuildProductItem extends StatelessWidget {
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: [
-              FlatButton(
+              IconButton(
+                icon: Icon(Icons.info),
                 color: Theme.of(context).accentColor,
-                child: Text('Details'),
                 onPressed: () => Navigator.pushNamed<bool>(
                             context, '/product/' + index.toString())
                         .then(
@@ -79,7 +79,34 @@ class BuildProductItem extends StatelessWidget {
                         }
                       },
                     ),
-              )
+              ),
+//              SizedBox(width: 5.0,),
+              IconButton(
+                icon: Icon(Icons.favorite_border),
+                color: Colors.red,
+                onPressed: () => Navigator.pushNamed<bool>(
+                    context, '/product/' + index.toString())
+                    .then(
+                      (bool value) {
+                    if (value) {
+//                          deleteProduct(index);
+                    }
+                  },
+                ),
+              ),
+//              FlatButton(
+//                color: Theme.of(context).accentColor,
+//                child: Text('Details'),
+//                onPressed: () => Navigator.pushNamed<bool>(
+//                            context, '/product/' + index.toString())
+//                        .then(
+//                      (bool value) {
+//                        if (value) {
+////                          deleteProduct(index);
+//                        }
+//                      },
+//                    ),
+//              )
             ],
           ),
         ],
