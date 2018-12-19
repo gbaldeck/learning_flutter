@@ -8,8 +8,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  String _email;
-  String _password;
+  String _email = "test";
+  String _password = "test";
   bool _acceptTerms = false;
 
   @override
@@ -26,8 +26,8 @@ class _AuthPageState extends State<AuthPage> {
               TextField(
                 decoration: InputDecoration(labelText: 'Email'),
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (email) => setState(
-                      () => _email = email,
+                onChanged: (emailOrNull) => setState(
+                      () => _email = emailOrNull ?? "test",
                     ),
               ),
               SizedBox(
@@ -36,8 +36,8 @@ class _AuthPageState extends State<AuthPage> {
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(labelText: 'Password'),
-                onChanged: (password) => setState(
-                      () => _password = password,
+                onChanged: (passwordOrNull) => setState(
+                      () => _password = passwordOrNull ?? "test",
                     ),
               ),
               SizedBox(

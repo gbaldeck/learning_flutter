@@ -12,9 +12,9 @@ class ProductCreatePage extends StatefulWidget {
 }
 
 class _ProductCreatePageState extends State<ProductCreatePage> {
-  String _titleValue;
-  String _descriptionValue;
-  double _priceValue;
+  String _titleValue = "Product";
+  String _descriptionValue = "Gotta love this product!";
+  double _priceValue = 0.00;
 
   @override
   Widget build(BuildContext context) {
