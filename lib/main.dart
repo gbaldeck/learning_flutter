@@ -43,6 +43,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         primarySwatch: Colors.deepPurple,
         accentColor: Colors.indigoAccent,
+//        fontFamily: 'Oswald',
       ),
       //define the home property or the / route, can't use both
 //      home: AuthPage(),

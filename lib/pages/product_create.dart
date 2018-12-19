@@ -12,9 +12,9 @@ class ProductCreatePage extends StatefulWidget {
 }
 
 class _ProductCreatePageState extends State<ProductCreatePage> {
-  String titleValue;
-  String descriptionValue;
-  double priceValue;
+  String _titleValue;
+  String _descriptionValue;
+  double _priceValue;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             ),
             onChanged: (String title) {
               setState(() {
-                titleValue = title;
+                _titleValue = title;
               });
             },
           ),
@@ -37,7 +37,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             decoration: InputDecoration(labelText: 'Product Description'),
             onChanged: (desc) {
               setState(() {
-                descriptionValue = desc;
+                _descriptionValue = desc;
               });
             },
           ),
@@ -45,7 +45,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             decoration: InputDecoration(labelText: 'Product Price'),
             keyboardType: TextInputType.number,
             onChanged: (price) => setState(
-                  () => priceValue = double.parse(price),
+                  () => _priceValue = double.parse(price),
                 ),
           ),
           SizedBox(height: 20.0,),
@@ -54,13 +54,13 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             textColor: Colors.white,
             onPressed: () {
               final product = <String, dynamic>{
-                'title': titleValue,
-                'description': descriptionValue,
-                'price': priceValue,
+                'title': _titleValue,
+                'description': _descriptionValue,
+                'price': _priceValue,
                 'image': 'assets/food.jpg',
               };
               widget.addProduct(product);
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/products');
             },
             child: Text('Save'),
           )
