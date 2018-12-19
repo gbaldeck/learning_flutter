@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../non_null.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  String _email = "test";
+  NonNull<String> _email;
   String _password = "test";
   bool _acceptTerms = false;
 
