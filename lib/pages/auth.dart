@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../null_types.dart';
+import '../null_safe.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -9,8 +9,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final NonNull<String> _email = NonNull(it: "test", fallback: "not null",);
-  final NonNull<String> _password = NonNull(it: "test", fallback: "not null",);
+  final NullSafe<String> _email = NullSafe(it: "test", fallback: "not null",);
+  final NullSafe<String> _password = NullSafe(it: "test", fallback: "not null",);
   bool _acceptTerms = false;
 
   @override

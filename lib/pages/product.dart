@@ -1,23 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../null_types.dart';
+import '../null_safe.dart';
 
 class ProductPage extends StatelessWidget {
-  final Nullable<String> _title;
-  final Nullable<double> _price;
-  final Nullable<String> _description;
-  final Nullable<String> _imageUrl;
+  final NullSafe<String> _title;
+  final NullSafe<double> _price;
+  final NullSafe<String> _description;
+  final NullSafe<String> _imageUrl;
 
   ProductPage({
     @required String title,
     @required double price,
     @required String description,
     @required String imageUrl,
-  })  : _title = Nullable(it: title, fallback: "Null title",),
-        _price = Nullable(it: price, fallback: 0.00,),
-        _description = Nullable(it: description, fallback: "Null description"),
-        _imageUrl = Nullable(it: imageUrl, fallback: "",);
+  })  : _title = NullSafe(it: title, fallback: "Null title",),
+        _price = NullSafe(it: price, fallback: 0.00,),
+        _description = NullSafe(it: description, fallback: "Null description"),
+        _imageUrl = NullSafe(it: imageUrl, fallback: "",);
 
   @override
   Widget build(BuildContext context) {
