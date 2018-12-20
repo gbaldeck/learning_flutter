@@ -1,35 +1,47 @@
+import 'package:meta/meta.dart';
+
 class NonNull<T> {
   T _it;
 
-  NonNull(T it) : _it = it;
+  NonNull({@required T it}) : _it = it;
 
-  void setIt(T it, bool nullCheck, [void Function() itsNull]) {
+  void setIt(T it, bool nullCheck, [void Function(void Function(T)) itsNull]) {
     if (!nullCheck) {
       _it = it;
     } else {
-      if (itsNull != null) itsNull();
+      if (itsNull != null) itsNull(_internalSetIt);
     }
   }
 
   T getIt() {
     return _it;
   }
+
+  void _internalSetIt(T it){
+    _it = it;
+  }
 }
 
 class Nullable<T> {
   T _it;
+  T _fallback;
 
-  Nullable([T it]) : _it = it;
+  Nullable({T it, @required T fallback})
+      : _it = it,
+        _fallback = fallback;
 
   void setIt(T it) {
     _it = it;
   }
 
-  void getIt(void Function(T) itsNotNull, [void Function() itsNull]) {
+  T getIt([T fallback]) {
     if (_it != null) {
-      itsNotNull(_it);
+      return _it;
     } else {
-      if (itsNull != null) itsNull();
+      if (fallback != null)
+        return fallback;
+      else
+        return _fallback;
     }
   }
 }
