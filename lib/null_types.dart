@@ -41,11 +41,11 @@ class Nullable<T> {
     _value = value;
   }
 
-  void getIt({@required void Function(T) isNotNull, void Function() isNull}) {
+  void getIt({@required void Function(T) funNotNull, void Function() funNull}) {
     if (_value != null) {
-      isNotNull(_value);
+      funNotNull(_value);
     } else {
-      if (isNull != null) isNull();
+      if (funNull != null) funNull();
     }
   }
 }
