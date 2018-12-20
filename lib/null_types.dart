@@ -12,12 +12,12 @@ class NonNull<T> {
 
   void setIt(T it) {
     if (it == null) {
-      try {
+      if (_harsh) {
         throw Exception('NonNull value cannot be set to null!');
-      } catch (e, s) {
-        if (_harsh) {
-          rethrow;
-        } else {
+      } else {
+        try {
+          throw Exception();
+        } catch (e, s) {
           print('NonNull value cannot be set to null!');
           print(s);
         }
