@@ -2,23 +2,25 @@ import 'package:meta/meta.dart';
 
 class NonNull<T> {
   T _it;
+  T _fallback;
 
-  NonNull({@required T it}) : _it = it;
+  NonNull({@required T it, @required T fallback})
+      : _it = it,
+        _fallback = fallback;
 
-  void setIt(T it, bool nullCheck, [void Function(void Function(T)) itsNull]) {
-    if (!nullCheck) {
+  void setIt(T it, [T fallback]) {
+    if (it != null) {
       _it = it;
     } else {
-      if (itsNull != null) itsNull(_internalSetIt);
+      if (fallback != null)
+        _it = fallback;
+      else
+        _it = _fallback;
     }
   }
 
   T getIt() {
     return _it;
-  }
-
-  void _internalSetIt(T it){
-    _it = it;
   }
 }
 

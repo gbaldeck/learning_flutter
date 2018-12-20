@@ -9,8 +9,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final NonNull<String> _email = NonNull(it: "test");
-  final NonNull<String> _password = NonNull(it: "test");
+  final NonNull<String> _email = NonNull(it: "test", fallback: "not null",);
+  final NonNull<String> _password = NonNull(it: "test", fallback: "not null",);
   bool _acceptTerms = false;
 
   @override
@@ -43,7 +43,7 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   keyboardType: TextInputType.emailAddress,
                   onChanged: (emailOrNull) => setState(
-                        () => _email.setIt(emailOrNull, emailOrNull == null),
+                        () => _email.setIt(emailOrNull),
                       ),
                 ),
                 SizedBox(
@@ -57,7 +57,7 @@ class _AuthPageState extends State<AuthPage> {
                     fillColor: Colors.white,
                   ),
                   onChanged: (passwordOrNull) => setState(
-                        () => _password.setIt(passwordOrNull, passwordOrNull == null),
+                        () => _password.setIt(passwordOrNull),
                       ),
                 ),
                 SizedBox(
