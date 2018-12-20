@@ -9,8 +9,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final NonNull<String> _email = NonNull(value: "test");
-  final NonNull<String> _password = NonNull(value: "test");
+  final NonNull<String> _email = NonNull(it: "test");
+  final NonNull<String> _password = NonNull(it: "test");
   bool _acceptTerms = false;
 
   @override
@@ -84,8 +84,8 @@ class _AuthPageState extends State<AuthPage> {
                 RaisedButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/products');
-                    print('Email: $_email');
-                    print('Password: $_password');
+                    print('Email: ${_email.getIt()}');
+                    print('Password: ${_password.getIt()}');
                   },
                   child: Text('LOGIN'),
                 ),
