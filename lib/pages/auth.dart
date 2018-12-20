@@ -43,7 +43,7 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   keyboardType: TextInputType.emailAddress,
                   onChanged: (emailOrNull) => setState(
-                        () => _email.setIt(emailOrNull),
+                        () => _email.setIt(emailOrNull, emailOrNull == null),
                       ),
                 ),
                 SizedBox(
@@ -57,7 +57,7 @@ class _AuthPageState extends State<AuthPage> {
                     fillColor: Colors.white,
                   ),
                   onChanged: (passwordOrNull) => setState(
-                        () => _password.setIt(passwordOrNull),
+                        () => _password.setIt(passwordOrNull, passwordOrNull == null),
                       ),
                 ),
                 SizedBox(

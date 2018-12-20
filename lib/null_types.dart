@@ -2,28 +2,16 @@ import 'package:meta/meta.dart';
 
 class NonNull<T> {
   T _it;
-  final bool _harsh;
 
   NonNull({
     @required T it,
-    bool harsh = false,
-  })  : _it = it,
-        _harsh = harsh;
+  }) : _it = it;
 
-  void setIt(T it) {
-    if (it == null) {
-      if (_harsh) {
-        throw Exception('NonNull value cannot be set to null!');
-      } else {
-        try {
-          throw Exception();
-        } catch (e, s) {
-          print('NonNull value cannot be set to null!');
-          print(s);
-        }
-      }
-    } else {
+  void setIt(T it, bool nullCheck, [void Function() itsNull]) {
+    if (!nullCheck) {
       _it = it;
+    } else {
+      if (itsNull != null) itsNull();
     }
   }
 
@@ -41,7 +29,7 @@ class Nullable<T> {
     _it = it;
   }
 
-  void getIt({@required void Function(T) itsNotNull, void Function() itsNull}) {
+  void getIt(void Function(T) itsNotNull, [void Function() itsNull]) {
     if (_it != null) {
       itsNotNull(_it);
     } else {
