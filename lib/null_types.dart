@@ -3,9 +3,7 @@ import 'package:meta/meta.dart';
 class NonNull<T> {
   T _it;
 
-  NonNull({
-    @required T it,
-  }) : _it = it;
+  NonNull(T it) : _it = it;
 
   void setIt(T it, bool nullCheck, [void Function() itsNull]) {
     if (!nullCheck) {
@@ -23,7 +21,7 @@ class NonNull<T> {
 class Nullable<T> {
   T _it;
 
-  Nullable({T it}) : _it = it;
+  Nullable([T it]) : _it = it;
 
   void setIt(T it) {
     _it = it;

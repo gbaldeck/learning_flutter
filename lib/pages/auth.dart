@@ -9,8 +9,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final NonNull<String> _email = NonNull(it: "test");
-  final NonNull<String> _password = NonNull(it: "test");
+  final NonNull<String> _email = NonNull("test");
+  final NonNull<String> _password = NonNull("test");
   bool _acceptTerms = false;
 
   @override
