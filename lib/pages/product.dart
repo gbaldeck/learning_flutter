@@ -1,23 +1,33 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../null_safe.dart';
+import '../null_types.dart';
+import '../widgets/products/price_tag.dart';
 
 class ProductPage extends StatelessWidget {
-  final NullSafe<String> _title;
-  final NullSafe<double> _price;
-  final NullSafe<String> _description;
-  final NullSafe<String> _imageUrl;
+  final NonNull<String> _title;
+  final NonNull<double> _price;
+  final NonNull<String> _description;
+  final Nullable<String> _imageUrl;
 
   ProductPage({
     @required String title,
     @required double price,
     @required String description,
     @required String imageUrl,
-  })  : _title = NullSafe(it: title, fallback: "Null title",),
-        _price = NullSafe(it: price, fallback: 0.00,),
-        _description = NullSafe(it: description, fallback: "Null description"),
-        _imageUrl = NullSafe(it: imageUrl, fallback: "",);
+  })  : _title = NonNull(it: title),
+        _price = NonNull(it: price),
+        _description = NonNull(it: description),
+        _imageUrl = Nullable(it: imageUrl);
+
+  String _actualImageUrl() {
+    String url;
+    _imageUrl.getIt(
+      itsNotNull: (it) => url = it,
+      itsNull: () => url = "Test",
+    );
+    return url;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +49,53 @@ class ProductPage extends StatelessWidget {
 //          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Image.asset(_imageUrl.getIt()),
+            Container(
+//              margin: EdgeInsets.only(bottom: 50,),
+              child: Image.asset(_actualImageUrl()),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 10,
+              ),
+              margin: EdgeInsets.only(bottom: 20, top: 50),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Text('Union Square, San Francisco'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  _title.getIt(),
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Oswald',
+                  ),
+                ),
+                SizedBox(
+                  width: 50.0,
+                ),
+                PriceTag('\$${_price.getIt().toString()}'),
+              ],
+            ),
+            SizedBox(
+              height: 50.0,
+            ),
             Container(
               padding: EdgeInsets.all(10.00),
-              child: Text(_title.getIt()),
+              alignment: Alignment.center,
+              child: Text(
+                _description.getIt(),
+                textAlign: TextAlign.center,
+              ),
             ),
 //            Container(
 //              padding: EdgeInsets.all(10.00),

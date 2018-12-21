@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../null_safe.dart';
+import '../null_types.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -9,8 +9,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final NullSafe<String> _email = NullSafe(it: "test", fallback: "not null",);
-  final NullSafe<String> _password = NullSafe(it: "test", fallback: "not null",);
+  final NonNull<String> _email = NonNull(it: "test");
+  final NonNull<String> _password = NonNull(it: "test");
   bool _acceptTerms = false;
 
   @override
@@ -43,7 +43,7 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   keyboardType: TextInputType.emailAddress,
                   onChanged: (emailOrNull) => setState(
-                        () => _email.setIt(emailOrNull),
+                        () => _email.setIt(emailOrNull, emailOrNull == null),
                       ),
                 ),
                 SizedBox(
@@ -57,7 +57,7 @@ class _AuthPageState extends State<AuthPage> {
                     fillColor: Colors.white,
                   ),
                   onChanged: (passwordOrNull) => setState(
-                        () => _password.setIt(passwordOrNull),
+                        () => _password.setIt(passwordOrNull, passwordOrNull == null),
                       ),
                 ),
                 SizedBox(
