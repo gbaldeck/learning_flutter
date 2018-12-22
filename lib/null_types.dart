@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+//import 'package:meta/meta.dart'; //for regular dart without flutter
 
-class NonNullable<T> {
+class NonNull<T> {
   T _it;
   Nullable<T> _nullable;
 
-  NonNullable({@required T it}) : _it = it {
+  NonNull({@required T it}) : _it = it {
     if (_it == null) throw Exception("'it' can't be null!");
   }
 
-  NonNullable.unsafe({@required T it, @required T ifItsNull})
-      : _it = it == null ? ifItsNull : it {
+  NonNull.unsafe({@required T it, @required T ifItsNull})
+      : _it = it ?? ifItsNull {
     if (_it == null) throw Exception("Either 'it' or 'ifItsNull' can be null... not both!");
   }
 
@@ -23,6 +24,7 @@ class NonNullable<T> {
         throw Exception();
       }catch(e, s){
         debugPrint("WARNING: 'it' was not set!\n$s");
+//        print("WARNING: 'it' was not set!\n$s"); //for regular dart without flutter
       }
     }
   }
@@ -43,7 +45,7 @@ class NonNullable<T> {
 
 class Nullable<T> {
   T _it;
-  NonNullable<T> _nonNullable;
+  NonNull<T> _nonNull;
 
   Nullable({T it}) : _it = it;
 
@@ -60,13 +62,13 @@ class Nullable<T> {
     else if (itsNull != null) itsNull();
   }
 
-  NonNullable<T> nonNullable(T ifItsNull) {
-    if(_nonNullable == null)
-      _nonNullable = NonNullable.unsafe(
+  NonNull<T> nonNull(T ifItsNull) {
+    if(_nonNull == null)
+      _nonNull = NonNull.unsafe(
         it: _it,
         ifItsNull: ifItsNull,
       );
 
-    return _nonNullable;
+    return _nonNull;
   }
 }

@@ -9,9 +9,14 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final NonNullable<String> _email = NonNullable(it: "test");
-  final NonNullable<String> _password = NonNullable(it: "test");
+  final NonNull<String> _email = NonNull(it: "test");
+  final NonNull<String> _password = NonNull(it: "test");
   bool _acceptTerms = false;
+
+  double get targetWidth{
+    final deviceWidth = MediaQuery.of(context).size.width;
+    return deviceWidth > 550.0 ? 500.0 : deviceWidth *.95;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,63 +38,66 @@ class _AuthPageState extends State<AuthPage> {
         child: Center(
           child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 50),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    filled: true,
-                    fillColor: Colors.white,
+            child: Container(
+              width: targetWidth,
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (emailOrNull) => setState(
+                          () => _email.setIt(emailOrNull),
+                        ),
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (emailOrNull) => setState(
-                        () => _email.setIt(emailOrNull),
-                      ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    filled: true,
-                    fillColor: Colors.white,
+                  SizedBox(
+                    height: 20.0,
                   ),
-                  onChanged: (passwordOrNull) => setState(
-                        () => _password.setIt(passwordOrNull),
-                      ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    onChanged: (passwordOrNull) => setState(
+                          () => _password.setIt(passwordOrNull),
+                        ),
                   ),
-                  child: SwitchListTile(
-                    title: Text('Accept Terms'),
-                    value: _acceptTerms,
-                    onChanged: (value) {
-                      setState(() {
-                        _acceptTerms = value;
-                      });
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: SwitchListTile(
+                      title: Text('Accept Terms'),
+                      value: _acceptTerms,
+                      onChanged: (value) {
+                        setState(() {
+                          _acceptTerms = value;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/products');
+                      print('Email: ${_email.getIt()}');
+                      print('Password: ${_password.getIt()}');
                     },
+                    child: Text('LOGIN'),
                   ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/products');
-                    print('Email: ${_email.getIt()}');
-                    print('Password: ${_password.getIt()}');
-                  },
-                  child: Text('LOGIN'),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

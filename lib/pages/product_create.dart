@@ -16,11 +16,18 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   String _descriptionValue = "Gotta love this product!";
   double _priceValue = 0.00;
 
+  double get targetPadding {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final targetWidth = deviceWidth > 550.0 ? deviceWidth * .85 : deviceWidth * .95;
+    return (deviceWidth - targetWidth) / 2;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(15),
       child: ListView(
+        padding: EdgeInsets.symmetric(horizontal: targetPadding),
         children: <Widget>[
           TextField(
             decoration: InputDecoration(

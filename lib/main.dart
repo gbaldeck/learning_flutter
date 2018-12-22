@@ -43,6 +43,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.light,
         primarySwatch: Colors.deepPurple,
         accentColor: Colors.indigoAccent,
+        buttonColor: Colors.indigoAccent,
 //        fontFamily: 'Oswald',
       ),
       //define the home property or the / route, can't use both
@@ -73,7 +74,9 @@ class _MyAppState extends State<MyApp> {
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute<void>(
           builder: (BuildContext context) {
-            return ProductsPage(_products,);
+            return ProductsPage(
+              _products,
+            );
           },
         );
       },

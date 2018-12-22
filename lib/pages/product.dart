@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../null_types.dart';
 import '../widgets/products/price_tag.dart';
+import '../widgets/products/address_tag.dart';
+import '../widgets/ui_elements/title_default.dart';
 
 class ProductPage extends StatelessWidget {
-  final NonNullable<String> _title;
-  final NonNullable<double> _price;
-  final NonNullable<String> _description;
+  final NonNull<String> _title;
+  final NonNull<double> _price;
+  final NonNull<String> _description;
   final Nullable<String> _imageUrl;
 
   ProductPage({
@@ -15,9 +17,9 @@ class ProductPage extends StatelessWidget {
     @required double price,
     @required String description,
     @required String imageUrl,
-  })  : _title = NonNullable(it: title),
-        _price = NonNullable(it: price),
-        _description = NonNullable(it: description),
+  })  : _title = NonNull(it: title),
+        _price = NonNull(it: price),
+        _description = NonNull(it: description),
         _imageUrl = Nullable(it: imageUrl);
 
   String _actualImageUrl() {
@@ -53,33 +55,12 @@ class ProductPage extends StatelessWidget {
 //              margin: EdgeInsets.only(bottom: 50,),
               child: Image.asset(_actualImageUrl()),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 10,
-              ),
-              margin: EdgeInsets.only(bottom: 20, top: 50),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 1.0,
-                ),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Text('Union Square, San Francisco'),
-            ),
+            AddressTag(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  _title.getIt(),
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Oswald',
-                  ),
-                ),
+                TitleDefault(_title.getIt()),
                 SizedBox(
                   width: 50.0,
                 ),
