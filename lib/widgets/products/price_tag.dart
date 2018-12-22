@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../null_types.dart';
 
 class PriceTag extends StatelessWidget {
-  final NullFallback<String> _price;
+  final NonNullable<String> _price;
 
-  PriceTag(String price): _price = NullFallback(it: price, fallback: "\$0.00");
+  PriceTag(String price): _price = NonNullable(it: price);
 
   @override
   Widget build(BuildContext context) {

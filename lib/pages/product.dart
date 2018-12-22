@@ -5,9 +5,9 @@ import '../null_types.dart';
 import '../widgets/products/price_tag.dart';
 
 class ProductPage extends StatelessWidget {
-  final NonNull<String> _title;
-  final NonNull<double> _price;
-  final NonNull<String> _description;
+  final NonNullable<String> _title;
+  final NonNullable<double> _price;
+  final NonNullable<String> _description;
   final Nullable<String> _imageUrl;
 
   ProductPage({
@@ -15,9 +15,9 @@ class ProductPage extends StatelessWidget {
     @required double price,
     @required String description,
     @required String imageUrl,
-  })  : _title = NonNull(it: title),
-        _price = NonNull(it: price),
-        _description = NonNull(it: description),
+  })  : _title = NonNullable(it: title),
+        _price = NonNullable(it: price),
+        _description = NonNullable(it: description),
         _imageUrl = Nullable(it: imageUrl);
 
   String _actualImageUrl() {
@@ -83,7 +83,7 @@ class ProductPage extends StatelessWidget {
                 SizedBox(
                   width: 50.0,
                 ),
-                PriceTag('\$${_price.getIt().toString()}'),
+                PriceTag('${_price.getIt().toString()}'),
               ],
             ),
             SizedBox(

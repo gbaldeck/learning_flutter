@@ -1,23 +1,49 @@
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
 
-class NonNull<T> {
+class NonNullable<T> {
   T _it;
+  Nullable<T> _nullable;
 
-  NonNull({@required T it}) : _it = it;
+  NonNullable({@required T it}) : _it = it {
+    if (_it == null) throw Exception("'it' can't be null!");
+  }
 
-  void setIt(T it, bool isItNull, [T ifItsNull]) {
-    if (!isItNull)
+  NonNullable.unsafe({@required T it, @required T ifItsNull})
+      : _it = it == null ? ifItsNull : it {
+    if (_it == null) throw Exception("Either 'it' or 'ifItsNull' can be null... not both!");
+  }
+
+  void setIt(T it, [T ifItsNull]) {
+    if (it != null) {
       _it = it;
-    else if (ifItsNull != null) _it = ifItsNull;
+    }else if (ifItsNull != null){
+      _it = ifItsNull;
+    }else {
+      try{
+        throw Exception();
+      }catch(e, s){
+        debugPrint("WARNING: 'it' was not set!\n$s");
+      }
+    }
   }
 
   T getIt() {
     return _it;
   }
+
+  Nullable<T> nullable() {
+    if(_nullable == null)
+      _nullable = Nullable(
+        it: _it,
+      );
+
+    return _nullable;
+  }
 }
 
 class Nullable<T> {
   T _it;
+  NonNullable<T> _nonNullable;
 
   Nullable({T it}) : _it = it;
 
@@ -33,30 +59,14 @@ class Nullable<T> {
       itsNotNull(_it);
     else if (itsNull != null) itsNull();
   }
-}
 
-class NullFallback<T> {
-  T _it;
-  T _fallback;
+  NonNullable<T> nonNullable(T ifItsNull) {
+    if(_nonNullable == null)
+      _nonNullable = NonNullable.unsafe(
+        it: _it,
+        ifItsNull: ifItsNull,
+      );
 
-  NullFallback({T it, @required T fallback})
-      : _it = it,
-        _fallback = fallback;
-
-  void setIt(T it) {
-    _it = it;
+    return _nonNullable;
   }
-
-  T getIt([T fallback]) {
-    if (_it != null) {
-      return _it;
-    } else {
-      if (fallback != null)
-        return fallback;
-      else
-        return _fallback;
-    }
-  }
-
-  bool get isNull => _it == null;
 }
