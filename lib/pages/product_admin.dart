@@ -5,7 +5,7 @@ import 'product_list.dart';
 import '../null_types.dart';
 
 class ProductAdminPage extends StatelessWidget {
-  final void Function(Map<String, NonNull<dynamic>>) addProduct;
+  final void Function(Map<String, MutableNonNull<dynamic>>) addProduct;
   final void Function(int) deleteProduct;
 
   ProductAdminPage(this.addProduct, this.deleteProduct);

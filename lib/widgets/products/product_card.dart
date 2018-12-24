@@ -6,8 +6,8 @@ import 'address_tag.dart';
 import '../../null_types.dart';
 
 class ProductCard extends StatelessWidget {
-  final Map<String, NonNull<dynamic>> product;
-  final NonNull<int> index;
+  final Map<String, MutableNonNull<dynamic>> product;
+  final MutableNonNull<int> index;
 
   const ProductCard({@required this.product, @required this.index});
 

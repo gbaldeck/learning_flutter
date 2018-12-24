@@ -7,10 +7,10 @@ import '../widgets/products/address_tag.dart';
 import '../widgets/ui_elements/title_default.dart';
 
 class ProductPage extends StatelessWidget {
-  final NonNull<String> title;
-  final NonNull<double> price;
-  final NonNull<String> description;
-  final Nullable<String> imageUrl;
+  final MutableNonNull<String> title;
+  final MutableNonNull<double> price;
+  final MutableNonNull<String> description;
+  final MutableNullable<String> imageUrl;
 
   ProductPage({
     @required this.title,

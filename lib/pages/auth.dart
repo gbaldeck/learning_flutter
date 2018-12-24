@@ -9,9 +9,9 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final NonNull<String> _email = NonNull(it: "test");
-  final NonNull<String> _password = NonNull(it: "test");
-  final NonNull<bool> _acceptTerms = NonNull(it: false);
+  final MutableNonNull<String> _email = MutableNonNull(it: "test");
+  final MutableNonNull<String> _password = MutableNonNull(it: "test");
+  final MutableNonNull<bool> _acceptTerms = MutableNonNull(it: false);
 
   double get targetWidth{
     final deviceWidth = MediaQuery.of(context).size.width;

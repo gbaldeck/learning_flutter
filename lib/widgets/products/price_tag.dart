@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../null_types.dart';
 
 class PriceTag extends StatelessWidget {
-  final NonNull<String> _price;
+  final MutableNonNull<String> _price;
 
-  PriceTag(String price): _price = NonNull(it: price);
+  PriceTag(String price): _price = MutableNonNull(it: price);
 
   @override
   Widget build(BuildContext context) {

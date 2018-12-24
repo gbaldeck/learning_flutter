@@ -4,7 +4,7 @@ import '../widgets/products/products.dart';
 import '../null_types.dart';
 
 class ProductsPage extends StatelessWidget {
-  final List<Map<String, NonNull<dynamic>>> products;
+  final List<Map<String, MutableNonNull<dynamic>>> products;
 
   ProductsPage(this.products);
 

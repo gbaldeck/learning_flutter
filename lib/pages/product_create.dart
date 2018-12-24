@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../null_types.dart';
 
 class ProductCreatePage extends StatefulWidget {
-  final void Function(Map<String, NonNull<dynamic>>) addProduct;
+  final void Function(Map<String, MutableNonNull<dynamic>>) addProduct;
 
   ProductCreatePage(this.addProduct);
 
@@ -14,9 +14,9 @@ class ProductCreatePage extends StatefulWidget {
 }
 
 class _ProductCreatePageState extends State<ProductCreatePage> {
-  final _titleValue = NonNull(it: "Product");
-  final _descriptionValue = NonNull(it: "Gotta love this product!", emptyStringIsNull: true);
-  final _priceValue = NonNull(it: 0.00);
+  final _titleValue = MutableNonNull(it: "Product");
+  final _descriptionValue = MutableNonNull(it: "Gotta love this product!", emptyStringIsNull: true);
+  final _priceValue = MutableNonNull(it: 0.00);
   final _formKey = GlobalKey<FormState>();
 
   double get targetPadding {
@@ -29,11 +29,11 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   void _submit() {
     if(_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      final product = <String, NonNull<dynamic>>{
+      final product = <String, MutableNonNull<dynamic>>{
         'title': _titleValue,
         'description': _descriptionValue,
         'price': _priceValue,
-        'image': NonNull<String>(it: 'assets/food.jpg'),
+        'image': MutableNonNull<String>(it: 'assets/food.jpg'),
       };
       widget.addProduct(product);
       Navigator.pushReplacementNamed(context, '/products');

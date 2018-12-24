@@ -4,7 +4,7 @@ import 'product_card.dart';
 import '../../null_types.dart';
 
 class Products extends StatelessWidget {
-  final List<Map<String, NonNull<dynamic>>> products;
+  final List<Map<String, MutableNonNull<dynamic>>> products;
 
   Products(this.products);
 
@@ -14,7 +14,7 @@ class Products extends StatelessWidget {
         ? ListView.builder(
       itemBuilder: (_, index) =>
           ProductCard(
-            product: products[index], index: NonNull(it: index),),
+            product: products[index], index: MutableNonNull(it: index),),
       itemCount: products.length,
     )
         : Center(

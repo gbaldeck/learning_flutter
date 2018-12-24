@@ -22,9 +22,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, NonNull<dynamic>>> _products = [];
+  List<Map<String, MutableNonNull<dynamic>>> _products = [];
 
-  void _addProduct(Map<String, NonNull<dynamic>> product) {
+  void _addProduct(Map<String, MutableNonNull<dynamic>> product) {
     setState(() {
       _products.add(product);
     });
@@ -65,10 +65,10 @@ class _MyAppState extends State<MyApp> {
 
           return MaterialPageRoute<bool>(
             builder: (BuildContext context) => ProductPage(
-                  title: _products[index]['title'] as NonNull<String>,
-                  price: _products[index]['price'] as NonNull<double>,
-                  description: _products[index]['description'] as NonNull<String>,
-                  imageUrl: _products[index]['image'].nullable() as Nullable<String>,
+                  title: _products[index]['title'] as MutableNonNull<String>,
+                  price: _products[index]['price'] as MutableNonNull<double>,
+                  description: _products[index]['description'] as MutableNonNull<String>,
+                  imageUrl: _products[index]['image'].mutableNullable() as MutableNullable<String>,
                 ),
           );
         }
