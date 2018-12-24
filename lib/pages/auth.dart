@@ -11,7 +11,7 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final NonNull<String> _email = NonNull(it: "test");
   final NonNull<String> _password = NonNull(it: "test");
-  bool _acceptTerms = false;
+  final NonNull<bool> _acceptTerms = NonNull(it: false);
 
   double get targetWidth{
     final deviceWidth = MediaQuery.of(context).size.width;
@@ -77,10 +77,10 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     child: SwitchListTile(
                       title: Text('Accept Terms'),
-                      value: _acceptTerms,
+                      value: _acceptTerms.getIt(),
                       onChanged: (value) {
                         setState(() {
-                          _acceptTerms = value;
+                          _acceptTerms.setIt(value);
                         });
                       },
                     ),

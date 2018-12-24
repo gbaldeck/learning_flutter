@@ -5,6 +5,7 @@ import 'pages/auth.dart';
 import 'pages/product.dart';
 import 'pages/product_admin.dart';
 import 'pages/products.dart';
+import 'null_types.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -21,9 +22,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, dynamic>> _products = [];
+  List<Map<String, NonNull<dynamic>>> _products = [];
 
-  void _addProduct(Map<String, dynamic> product) {
+  void _addProduct(Map<String, NonNull<dynamic>> product) {
     setState(() {
       _products.add(product);
     });
@@ -41,9 +42,10 @@ class _MyAppState extends State<MyApp> {
 //      debugShowMaterialGrid: true,
       theme: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.deepPurple,
-        accentColor: Colors.indigoAccent,
-        buttonColor: Colors.indigoAccent,
+        primarySwatch: Colors.teal,
+        accentColor: Colors.tealAccent,
+        buttonColor: Colors.tealAccent,
+//        buttonTheme: ButtonThemeData(),
 //        fontFamily: 'Oswald',
       ),
       //define the home property or the / route, can't use both
@@ -63,10 +65,10 @@ class _MyAppState extends State<MyApp> {
 
           return MaterialPageRoute<bool>(
             builder: (BuildContext context) => ProductPage(
-                  title: _products[index]['title'] as String,
-                  price: _products[index]['price'] as double,
-                  description: _products[index]['description'] as String,
-                  imageUrl: _products[index]['image'] as String,
+                  title: _products[index]['title'] as NonNull<String>,
+                  price: _products[index]['price'] as NonNull<double>,
+                  description: _products[index]['description'] as NonNull<String>,
+                  imageUrl: _products[index]['image'].nullable() as Nullable<String>,
                 ),
           );
         }

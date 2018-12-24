@@ -7,24 +7,21 @@ import '../widgets/products/address_tag.dart';
 import '../widgets/ui_elements/title_default.dart';
 
 class ProductPage extends StatelessWidget {
-  final NonNull<String> _title;
-  final NonNull<double> _price;
-  final NonNull<String> _description;
-  final Nullable<String> _imageUrl;
+  final NonNull<String> title;
+  final NonNull<double> price;
+  final NonNull<String> description;
+  final Nullable<String> imageUrl;
 
   ProductPage({
-    @required String title,
-    @required double price,
-    @required String description,
-    @required String imageUrl,
-  })  : _title = NonNull(it: title),
-        _price = NonNull(it: price),
-        _description = NonNull(it: description),
-        _imageUrl = Nullable(it: imageUrl);
+    @required this.title,
+    @required this.price,
+    @required this.description,
+    @required this.imageUrl,
+  });
 
   String _actualImageUrl() {
     String url;
-    _imageUrl.getIt(
+    imageUrl.getIt(
       itsNotNull: (it) => url = it,
       itsNull: () => url = "Test",
     );
@@ -45,7 +42,7 @@ class ProductPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(_title.getIt()),
+          title: Text(title.getIt()),
         ),
         body: Column(
 //          mainAxisAlignment: MainAxisAlignment.center,
@@ -60,11 +57,11 @@ class ProductPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                TitleDefault(_title.getIt()),
+                TitleDefault(title.getIt()),
                 SizedBox(
                   width: 50.0,
                 ),
-                PriceTag('${_price.getIt().toString()}'),
+                PriceTag('${price.getIt().toString()}'),
               ],
             ),
             SizedBox(
@@ -74,7 +71,7 @@ class ProductPage extends StatelessWidget {
               padding: EdgeInsets.all(10.00),
               alignment: Alignment.center,
               child: Text(
-                _description.getIt(),
+                description.getIt(),
                 textAlign: TextAlign.center,
               ),
             ),

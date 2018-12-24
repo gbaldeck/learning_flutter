@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'product_create.dart';
 import 'product_list.dart';
+import '../null_types.dart';
 
 class ProductAdminPage extends StatelessWidget {
-  final void Function(Map<String, dynamic>) addProduct;
+  final void Function(Map<String, NonNull<dynamic>>) addProduct;
   final void Function(int) deleteProduct;
 
   ProductAdminPage(this.addProduct, this.deleteProduct);
