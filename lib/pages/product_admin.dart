@@ -7,8 +7,9 @@ import '../null_types.dart';
 class ProductAdminPage extends StatelessWidget {
   final void Function(Map<String, MutableNonNull<dynamic>>) addProduct;
   final void Function(int) deleteProduct;
+  final List<Map<String, MutableNonNull<dynamic>>> products;
 
-  ProductAdminPage(this.addProduct, this.deleteProduct);
+  ProductAdminPage(this.products, this.addProduct, this.deleteProduct);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class ProductAdminPage extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             ProductCreatePage(addProduct),
-            ProductListPage(),
+            ProductListPage(products),
           ],
         ),
       ),

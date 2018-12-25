@@ -1,20 +1,93 @@
 import 'package:flutter/material.dart';
 //import 'package:meta/meta.dart'; //for regular dart without flutter
 
-class MutableNonNull<T> extends NonNull<T> {
-  @override
+NonNull<T> nonNullOf<T>(
+        {@required T it, T ifItsNull, bool emptyStringIsNull = false}) =>
+    _MutableNonNullImpl(
+      it: it,
+      emptyStringIsNull: emptyStringIsNull,
+    );
+
+MutableNonNull<T> mutableNonNullOf<T>(
+        {@required T it, bool emptyStringIsNull = false}) =>
+    _MutableNonNullImpl(
+      it: it,
+      emptyStringIsNull: emptyStringIsNull,
+    );
+
+NonNull<T> safeNonNullOf<T>(
+        {@required T it,
+        @required T ifItsNull,
+        bool emptyStringIsNull = false}) =>
+    _MutableNonNullImpl.safe(
+      it: it,
+      ifItsNull: ifItsNull,
+      emptyStringIsNull: emptyStringIsNull,
+    );
+
+MutableNonNull<T> safeMutableNonNullOf<T>(
+        {@required T it,
+        @required T ifItsNull,
+        bool emptyStringIsNull = false}) =>
+    _MutableNonNullImpl.safe(
+      it: it,
+      ifItsNull: ifItsNull,
+      emptyStringIsNull: emptyStringIsNull,
+    );
+
+Nullable<T> nullableOf<T>({T it, bool emptyStringIsNull = false}) =>
+    _MutableNullableImpl(
+      it: it,
+      emptyStringIsNull: emptyStringIsNull,
+    );
+
+MutableNullable<T> mutableNullableOf<T>(
+        {T it, bool emptyStringIsNull = false}) =>
+    _MutableNullableImpl(
+      it: it,
+      emptyStringIsNull: emptyStringIsNull,
+    );
+
+/////////////////////////////
+///////NonNull interface////
+/////////////////////////////
+
+abstract class NonNull<T> {
+  T getIt();
+
+  MutableNullable<T> copyAsMutableNullable({bool emptyStringIsNull});
+
+  Nullable<T> copyAsNullable({bool emptyStringIsNull});
+
+  NonNull<T> copyAsNonNull({bool emptyStringIsNull});
+
+  MutableNonNull<T> copyAsMutableNonNull({bool emptyStringIsNull});
+}
+
+///////////////////////////////////
+///////MutableNonNull interface////
+///////////////////////////////////
+
+abstract class MutableNonNull<T> extends NonNull<T> {
+  void setIt(T it, {T ifItsNull});
+}
+
+///////////////////////////////////////////
+////////_MutableNonNullImpl class//////////
+///////////////////////////////////////////
+
+class _MutableNonNullImpl<T> extends MutableNonNull<T> {
   T _it;
-  @override
   final bool _emptyStringIsNull;
 
-  MutableNonNull({@required T it, bool emptyStringIsNull = false})
+  _MutableNonNullImpl({@required T it, bool emptyStringIsNull = false})
       : _it = it,
         _emptyStringIsNull = emptyStringIsNull {
     if (_it == null || (_emptyStringIsNull && _it is String && _it == ""))
       throw Exception("'it' can't be null!");
   }
 
-  MutableNonNull.safe(
+  _MutableNonNullImpl.safe(
       {@required T it, @required T ifItsNull, bool emptyStringIsNull = false})
       : _it = it ?? ifItsNull,
         _emptyStringIsNull = emptyStringIsNull {
@@ -39,52 +112,71 @@ class MutableNonNull<T> extends NonNull<T> {
       }
     }
   }
-}
-
-class NonNull<T> {
-  final T _it;
-  final bool _emptyStringIsNull;
-
-  const NonNull({@required T it, bool emptyStringIsNull = false})
-      : _it = it,
-        _emptyStringIsNull = emptyStringIsNull;
 
   T getIt() {
     return _it;
   }
 
-  NonNull.safe(
-      {@required T it, @required T ifItsNull, bool emptyStringIsNull = false})
-      : _it = it ?? ifItsNull,
-        _emptyStringIsNull = emptyStringIsNull {
-    if (ifItsNull == null ||
-        (_emptyStringIsNull && ifItsNull is String && ifItsNull == ""))
-      throw Exception(
-          "'ifItsNull' cannot be null! 'ifItsNull' is meant as a fallback and should never be capable of being null.");
-  }
-
-  MutableNullable<T> mutableNullable({bool emptyStringIsNull}) {
-    return MutableNullable(
+  MutableNullable<T> copyAsMutableNullable({bool emptyStringIsNull}) {
+    return _MutableNullableImpl(
       it: _it,
       emptyStringIsNull: emptyStringIsNull ?? _emptyStringIsNull,
     );
   }
 
-  Nullable<T> nullable({bool emptyStringIsNull}) {
-    return Nullable(
+  Nullable<T> copyAsNullable({bool emptyStringIsNull}) {
+    return copyAsMutableNullable(emptyStringIsNull: emptyStringIsNull);
+  }
+
+  NonNull<T> copyAsNonNull({bool emptyStringIsNull}) {
+    return copyAsMutableNonNull(emptyStringIsNull: emptyStringIsNull);
+  }
+
+  MutableNonNull<T> copyAsMutableNonNull({bool emptyStringIsNull}) {
+    return _MutableNonNullImpl(
       it: _it,
       emptyStringIsNull: emptyStringIsNull ?? _emptyStringIsNull,
     );
   }
 }
 
-class MutableNullable<T> extends Nullable<T> {
-  @override
+/////////////////////////////
+///////Nullable interface////
+/////////////////////////////
+
+abstract class Nullable<T> {
+  void getIt({
+    @required void Function(T) itsNotNull,
+    void Function() itsNull,
+  });
+
+  MutableNonNull<T> copyAsMutableNonNull(
+      {@required T ifItsNull, bool emptyStringIsNull});
+
+  NonNull<T> copyAsNonNull({@required T ifItsNull, bool emptyStringIsNull});
+
+  Nullable<T> copyAsNullable({bool emptyStringIsNull});
+
+  MutableNullable<T> copyAsMutableNullable({bool emptyStringIsNull});
+}
+
+///////////////////////////////////////
+////////MutableNullable interface//////////
+///////////////////////////////////////
+
+abstract class MutableNullable<T> extends Nullable<T> {
+  void setIt(T it);
+}
+
+///////////////////////////////////////
+////////MutableNullable class//////////
+///////////////////////////////////////
+
+class _MutableNullableImpl<T> extends MutableNullable<T> {
   T _it;
-  @override
   final bool _emptyStringIsNull;
 
-  MutableNullable({T it, bool emptyStringIsNull = false})
+  _MutableNullableImpl({T it, bool emptyStringIsNull = false})
       : _it = it,
         _emptyStringIsNull = emptyStringIsNull;
 
@@ -92,24 +184,7 @@ class MutableNullable<T> extends Nullable<T> {
     _it = it;
   }
 
-  void getIt({
-    @required void Function(T) itsNotNull,
-    void Function() itsNull,
-  }) {
-    if (_it != null && !(_emptyStringIsNull && _it is String && _it == ""))
-      itsNotNull(_it);
-    else if (itsNull != null) itsNull();
-  }
-}
-
-class Nullable<T> {
-  final T _it;
-  final bool _emptyStringIsNull;
-
-  const Nullable({T it, bool emptyStringIsNull = false})
-      : _it = it,
-        _emptyStringIsNull = emptyStringIsNull;
-
+  @override
   void getIt({
     @required void Function(T) itsNotNull,
     void Function() itsNull,
@@ -119,20 +194,34 @@ class Nullable<T> {
     else if (itsNull != null) itsNull();
   }
 
-  MutableNonNull<T> mutableNonNull(
+  @override
+  MutableNonNull<T> copyAsMutableNonNull(
       {@required T ifItsNull, bool emptyStringIsNull}) {
-    return MutableNonNull.safe(
+    return _MutableNonNullImpl.safe(
       it: _it,
       ifItsNull: ifItsNull,
       emptyStringIsNull: emptyStringIsNull ?? _emptyStringIsNull,
     );
   }
 
-  NonNull<T> nonNull(
-      {@required T ifItsNull, bool emptyStringIsNull}) {
-    return NonNull.safe(
+  @override
+  NonNull<T> copyAsNonNull({@required T ifItsNull, bool emptyStringIsNull}) {
+    return _MutableNonNullImpl.safe(
       it: _it,
       ifItsNull: ifItsNull,
+      emptyStringIsNull: emptyStringIsNull ?? _emptyStringIsNull,
+    );
+  }
+
+  @override
+  Nullable<T> copyAsNullable({bool emptyStringIsNull}) {
+    return copyAsMutableNullable(emptyStringIsNull: emptyStringIsNull);
+  }
+
+  @override
+  MutableNullable<T> copyAsMutableNullable({bool emptyStringIsNull}) {
+    return _MutableNullableImpl(
+      it: _it,
       emptyStringIsNull: emptyStringIsNull ?? _emptyStringIsNull,
     );
   }

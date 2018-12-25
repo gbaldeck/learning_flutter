@@ -14,9 +14,10 @@ class ProductCreatePage extends StatefulWidget {
 }
 
 class _ProductCreatePageState extends State<ProductCreatePage> {
-  final _titleValue = MutableNonNull(it: "Product");
-  final _descriptionValue = MutableNonNull(it: "Gotta love this product!", emptyStringIsNull: true);
-  final _priceValue = MutableNonNull(it: 0.00);
+  final _titleValue = mutableNonNullOf(it: "Product");
+  final _descriptionValue =
+      mutableNonNullOf(it: "Gotta love this product!", emptyStringIsNull: true);
+  final _priceValue = mutableNonNullOf(it: 0.00);
   final _formKey = GlobalKey<FormState>();
 
   double get targetPadding {
@@ -27,13 +28,13 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   }
 
   void _submit() {
-    if(_formKey.currentState.validate()) {
+    if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       final product = <String, MutableNonNull<dynamic>>{
         'title': _titleValue,
         'description': _descriptionValue,
         'price': _priceValue,
-        'image': MutableNonNull<String>(it: 'assets/food.jpg'),
+        'image': mutableNonNullOf<String>(it: 'assets/food.jpg'),
       };
       widget.addProduct(product);
       Navigator.pushReplacementNamed(context, '/products');
@@ -42,57 +43,69 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(
+            FocusNode()); //dismisses keyboard when tap outside of box
+      },
+      child: Form(
+        key: _formKey,
 //      autovalidate: true,
-      child: Container(
-        margin: EdgeInsets.all(15),
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: targetPadding),
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Product Title',
-              ),
-              validator: (value) {
-                if(value.isEmpty){
-                  return 'Title is required!';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                setState(() {
+        child: Container(
+          margin: EdgeInsets.all(15),
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: targetPadding),
+            children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Product Title',
+                ),
+                validator: (value) {
+                  if (value.isEmpty || value.length < 5) {
+                    return 'Title is required and should be 5+ characters long!';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
                   _titleValue.setIt(value, ifItsNull: "Well shit....");
-                });
-              },
-            ),
-            TextFormField(
-              maxLines: 4,
-              decoration: InputDecoration(labelText: 'Product Description'),
-              onSaved: (value) {
-                setState(() {
+                },
+              ),
+              TextFormField(
+                maxLines: 4,
+                decoration: InputDecoration(labelText: 'Product Description'),
+                validator: (value) {
+                  if (value.isEmpty || value.length < 10) {
+                    return 'Description is required and should be 10+ characters long!';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
                   _descriptionValue.setIt(value);
-                });
-              },
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Product Price'),
-              keyboardType: TextInputType.number,
-              onSaved: (value) {
-                setState(() {
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Product Price'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value.isEmpty ||
+                      !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
+                    return 'Price is required and should be a number!';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
                   _priceValue.setIt(double.parse(value), ifItsNull: 0.0);
-                });
-              },
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            RaisedButton(
+                },
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              RaisedButton(
 //            color: Theme.of(context).accentColor,
-              textColor: Colors.white,
-              onPressed: _submit,
-              child: Text('Save'),
-            ),
+                textColor: Colors.white,
+                onPressed: _submit,
+                child: Text('Save'),
+              ),
 //          GestureDetector(
 //            onTap: _submit,
 //            child: Container(
@@ -101,7 +114,8 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
 //              child: Text("My Button"),
 //            ),
 //          ),
-          ],
+            ],
+          ),
         ),
       ),
     );

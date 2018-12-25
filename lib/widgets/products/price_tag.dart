@@ -5,7 +5,7 @@ import '../../null_types.dart';
 class PriceTag extends StatelessWidget {
   final MutableNonNull<String> _price;
 
-  PriceTag(String price): _price = MutableNonNull(it: price);
+  PriceTag(String price): _price = mutableNonNullOf(it: price);
 
   @override
   Widget build(BuildContext context) {

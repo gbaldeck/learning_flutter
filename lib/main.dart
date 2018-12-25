@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
         //the / is a special route that is reserved for the home page
         '/': (context) => AuthPage(),
         '/products': (context) => ProductsPage(_products),
-        '/admin': (context) => ProductAdminPage(_addProduct, _deleteProduct),
+        '/admin': (context) => ProductAdminPage(_products, _addProduct, _deleteProduct),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
                   title: _products[index]['title'] as MutableNonNull<String>,
                   price: _products[index]['price'] as MutableNonNull<double>,
                   description: _products[index]['description'] as MutableNonNull<String>,
-                  imageUrl: _products[index]['image'].mutableNullable() as MutableNullable<String>,
+                  imageUrl: _products[index]['image'].copyAsMutableNullable() as MutableNullable<String>,
                 ),
           );
         }

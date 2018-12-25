@@ -14,7 +14,7 @@ class Products extends StatelessWidget {
         ? ListView.builder(
       itemBuilder: (_, index) =>
           ProductCard(
-            product: products[index], index: MutableNonNull(it: index),),
+            product: products[index], index: mutableNonNullOf(it: index),),
       itemCount: products.length,
     )
         : Center(
