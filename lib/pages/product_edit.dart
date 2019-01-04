@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../null_types.dart';
 
-class ProductCreatePage extends StatefulWidget {
+class ProductEditPage extends StatefulWidget {
   final void Function(Map<String, MutableNonNull<dynamic>>) addProduct;
+  final void Function(int index, Map<String, MutableNonNull<dynamic>>) updateProduct;
+  final Map<String, MutableNonNull<dynamic>> product;
+  final int index;
 
-  ProductCreatePage(this.addProduct);
+  ProductEditPage({this.addProduct, this.product, this.updateProduct, this.index});
 
   @override
   State<StatefulWidget> createState() {
-    return _ProductCreatePageState();
+    return _ProductEditPageState();
   }
 }
 
-class _ProductCreatePageState extends State<ProductCreatePage> {
+class _ProductEditPageState extends State<ProductEditPage> {
   final _titleValue = mutableNonNullOf(it: "Product");
   final _descriptionValue =
       mutableNonNullOf(it: "Gotta love this product!", emptyStringIsNull: true);
@@ -36,14 +39,17 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
         'price': _priceValue,
         'image': mutableNonNullOf<String>(it: 'assets/food.jpg'),
       };
-      widget.addProduct(product);
+      if(widget.product == null)
+        widget.addProduct(product);
+      else
+        widget.updateProduct(widget.index, product);
       Navigator.pushReplacementNamed(context, '/products');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    final pageContent = GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(
             FocusNode()); //dismisses keyboard when tap outside of box
@@ -57,6 +63,9 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             padding: EdgeInsets.symmetric(horizontal: targetPadding),
             children: <Widget>[
               TextFormField(
+                initialValue: widget.product != null
+                    ? widget.product['title'].getIt() as String
+                    : '',
                 decoration: InputDecoration(
                   labelText: 'Product Title',
                 ),
@@ -71,6 +80,9 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 },
               ),
               TextFormField(
+                initialValue: widget.product != null
+                    ? widget.product['description'].getIt() as String
+                    : '',
                 maxLines: 4,
                 decoration: InputDecoration(labelText: 'Product Description'),
                 validator: (value) {
@@ -84,6 +96,9 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 },
               ),
               TextFormField(
+                initialValue: widget.product != null
+                    ? (widget.product['price'].getIt() as double).toString()
+                    : '',
                 decoration: InputDecoration(labelText: 'Product Price'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -134,5 +149,14 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
 //        },
 //      ),
 //    );
+
+    return widget.product == null
+        ? pageContent
+        : Scaffold(
+            appBar: AppBar(
+              title: Text('Edit Product'),
+            ),
+            body: pageContent,
+          );
   }
 }

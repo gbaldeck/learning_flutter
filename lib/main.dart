@@ -30,6 +30,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _updateProduct(int index, Map<String, MutableNonNull<dynamic>> product) {
+    setState(() {
+      _products[index] = product;
+    });
+  }
+
   void _deleteProduct(int index) {
     setState(() {
       _products.removeAt(index);
@@ -54,7 +60,7 @@ class _MyAppState extends State<MyApp> {
         //the / is a special route that is reserved for the home page
         '/': (context) => AuthPage(),
         '/products': (context) => ProductsPage(_products),
-        '/admin': (context) => ProductAdminPage(_products, _addProduct, _deleteProduct),
+        '/admin': (context) => ProductAdminPage(_products, _addProduct, _updateProduct, _deleteProduct),
       },
       onGenerateRoute: (RouteSettings settings) {
         final List<String> pathElements = settings.name.split('/');
