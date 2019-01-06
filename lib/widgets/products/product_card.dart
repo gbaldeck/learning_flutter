@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'price_tag.dart';
 import '../ui_elements/title_default.dart';
 import 'address_tag.dart';
-import '../../null_types.dart';
+import '../../models/product.dart';
 
 class ProductCard extends StatelessWidget {
-  final Map<String, MutableNonNull<dynamic>> product;
-  final MutableNonNull<int> index;
+  final Product product;
+  final int index;
 
   const ProductCard({@required this.product, @required this.index});
 
@@ -16,18 +16,18 @@ class ProductCard extends StatelessWidget {
     return Card(
       child: Column(
         children: [
-          Image.asset(product['image'].getIt() as String),
+          Image.asset(product.image),
           Container(
             padding: EdgeInsets.only(top: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                TitleDefault(product['title'].getIt() as String),
+                TitleDefault(product.title),
                 SizedBox(
                   width: 8.0,
                 ),
-                PriceTag(product['price'].getIt().toString()),
+                PriceTag(product.price.toString()),
               ],
             ),
           ),
@@ -39,7 +39,7 @@ class ProductCard extends StatelessWidget {
                 icon: Icon(Icons.info),
                 color: Theme.of(context).accentColor,
                 onPressed: () => Navigator.pushNamed<bool>(
-                            context, '/product/' + index.getIt().toString())
+                            context, '/product/' + index.toString())
                         .then(
                       (bool value) {
                         if (value) {
@@ -53,7 +53,7 @@ class ProductCard extends StatelessWidget {
                 icon: Icon(Icons.favorite_border),
                 color: Colors.red,
                 onPressed: () => Navigator.pushNamed<bool>(
-                    context, '/product/' + index.getIt().toString())
+                    context, '/product/' + index.toString())
                     .then(
                       (bool value) {
                     if (value) {

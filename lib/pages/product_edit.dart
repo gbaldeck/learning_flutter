@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../null_types.dart';
+import '../models/product.dart';
 
 class ProductEditPage extends StatefulWidget {
-  final void Function(Map<String, MutableNonNull<dynamic>>) addProduct;
-  final void Function(int index, Map<String, MutableNonNull<dynamic>>) updateProduct;
-  final Map<String, MutableNonNull<dynamic>> product;
+  final void Function(Product) addProduct;
+  final void Function(int index, Product) updateProduct;
+  final Product product;
   final int index;
 
   ProductEditPage({this.addProduct, this.product, this.updateProduct, this.index});
@@ -17,10 +17,9 @@ class ProductEditPage extends StatefulWidget {
 }
 
 class _ProductEditPageState extends State<ProductEditPage> {
-  final _titleValue = mutableNonNullOf(it: "Product");
-  final _descriptionValue =
-      mutableNonNullOf(it: "Gotta love this product!", emptyStringIsNull: true);
-  final _priceValue = mutableNonNullOf(it: 0.00);
+  String _titleValue;
+  String _descriptionValue;
+  String _priceValue;
   final _formKey = GlobalKey<FormState>();
 
   double get targetPadding {
@@ -33,12 +32,12 @@ class _ProductEditPageState extends State<ProductEditPage> {
   void _submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      final product = <String, MutableNonNull<dynamic>>{
-        'title': _titleValue,
-        'description': _descriptionValue,
-        'price': _priceValue,
-        'image': mutableNonNullOf<String>(it: 'assets/food.jpg'),
-      };
+      final product = Product(
+        title: _titleValue,
+        description: _descriptionValue,
+        price: double.parse(_priceValue),
+        image: 'assets/food.jpg',
+      );
       if(widget.product == null)
         widget.addProduct(product);
       else
@@ -63,9 +62,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
             padding: EdgeInsets.symmetric(horizontal: targetPadding),
             children: <Widget>[
               TextFormField(
-                initialValue: widget.product != null
-                    ? widget.product['title'].getIt() as String
-                    : '',
+                initialValue: widget.product?.title ?? '',
                 decoration: InputDecoration(
                   labelText: 'Product Title',
                 ),
@@ -76,13 +73,11 @@ class _ProductEditPageState extends State<ProductEditPage> {
                   return null;
                 },
                 onSaved: (value) {
-                  _titleValue.setIt(value, ifItsNull: "Well shit....");
+                  _titleValue = value;
                 },
               ),
               TextFormField(
-                initialValue: widget.product != null
-                    ? widget.product['description'].getIt() as String
-                    : '',
+                initialValue: widget.product?.description ?? '',
                 maxLines: 4,
                 decoration: InputDecoration(labelText: 'Product Description'),
                 validator: (value) {
@@ -92,13 +87,11 @@ class _ProductEditPageState extends State<ProductEditPage> {
                   return null;
                 },
                 onSaved: (value) {
-                  _descriptionValue.setIt(value);
+                  _descriptionValue = value;
                 },
               ),
               TextFormField(
-                initialValue: widget.product != null
-                    ? (widget.product['price'].getIt() as double).toString()
-                    : '',
+                initialValue: widget.product?.price?.toString() ?? '',
                 decoration: InputDecoration(labelText: 'Product Price'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -109,7 +102,7 @@ class _ProductEditPageState extends State<ProductEditPage> {
                   return null;
                 },
                 onSaved: (value) {
-                  _priceValue.setIt(double.parse(value), ifItsNull: 0.0);
+                  _priceValue = value;
                 },
               ),
               SizedBox(

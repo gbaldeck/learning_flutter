@@ -1,16 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import '../null_types.dart';
-import '../widgets/products/price_tag.dart';
+
 import '../widgets/products/address_tag.dart';
+import '../widgets/products/price_tag.dart';
 import '../widgets/ui_elements/title_default.dart';
 
 class ProductPage extends StatelessWidget {
-  final MutableNonNull<String> title;
-  final MutableNonNull<double> price;
-  final MutableNonNull<String> description;
-  final MutableNullable<String> imageUrl;
+  final String title;
+  final double price;
+  final String description;
+  final String imageUrl;
 
   ProductPage({
     @required this.title,
@@ -18,15 +17,6 @@ class ProductPage extends StatelessWidget {
     @required this.description,
     @required this.imageUrl,
   });
-
-  String _actualImageUrl() {
-    String url;
-    imageUrl.getIt(
-      itsNotNull: (it) => url = it,
-      itsNull: () => url = "Test",
-    );
-    return url;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +32,7 @@ class ProductPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(title.getIt()),
+          title: Text(title),
         ),
         body: Column(
 //          mainAxisAlignment: MainAxisAlignment.center,
@@ -50,18 +40,18 @@ class ProductPage extends StatelessWidget {
           children: <Widget>[
             Container(
 //              margin: EdgeInsets.only(bottom: 50,),
-              child: Image.asset(_actualImageUrl()),
+              child: Image.asset(imageUrl),
             ),
             AddressTag(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                TitleDefault(title.getIt()),
+                TitleDefault(title),
                 SizedBox(
                   width: 50.0,
                 ),
-                PriceTag('${price.getIt().toString()}'),
+                PriceTag('${price.toString()}'),
               ],
             ),
             SizedBox(
@@ -71,7 +61,7 @@ class ProductPage extends StatelessWidget {
               padding: EdgeInsets.all(10.00),
               alignment: Alignment.center,
               child: Text(
-                description.getIt(),
+                description,
                 textAlign: TextAlign.center,
               ),
             ),
